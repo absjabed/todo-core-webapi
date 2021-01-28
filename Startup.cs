@@ -1,15 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using todo_core_webapi.Entities;
+using todo_core_webapi.Helpers;
+using todo_core_webapi.Interface;
+using todo_core_webapi.Services;
 
 namespace todo_core_webapi
 {
@@ -26,6 +25,10 @@ namespace todo_core_webapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddDbContext<ToDoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DbConnection")));
+
+            services.AddScoped<IDataOperations, DataOperationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

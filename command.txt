@@ -1,0 +1,191 @@
+dotnet ef dbcontext scaffold "Server=localhost;User Id=dbuser;Password=dbpass;Database=ToDoDb;" Microsoft.EntityFrameworkCore.SqlServer -o Entities -t UserInfoTable -t TodoTable
+
+
+POST
+http://localhost:5000/ApiData/Authenticate
+
+==
+{
+    "VUserId": "absjabed",
+    "VPassword": "todo123"
+}
+------------------
+
+{
+    "isAuthenticated": true,
+    "isRegistrationSucceed": false,
+    "vMessage": "Authentication Succeed!",
+    "userObj": {
+        "iAutoId": 1,
+        "vUserId": "absjabed",
+        "vFullName": "MD ABS Jabed",
+        "dDateOfBirth": "1900-04-07T00:00:00",
+        "bIsActive": true
+    }
+}
+
++++
+
+{
+    "isAuthenticated": false,
+    "isRegistrationSucceed": false,
+    "vMessage": "Authentication Failed!",
+    "userObj": null
+}
+
++++
+
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+    "title": "One or more validation errors occurred.",
+    "status": 400,
+    "traceId": "|b4ba458d-482e95c6ecf487d7.",
+    "errors": {
+        "VUserId": [
+            "The VUserId field is required."
+        ],
+        "VPassword": [
+            "The VPassword field is required."
+        ]
+    }
+}
+==
+
+----------------
+http://localhost:5000/ApiData/SignUp
+
+{ 
+        "VUserId" : "akib",
+        "VPassword": "123",
+        "VFullName" : "akib",
+        "DDateOfBirth": "1998-02-09"
+}
+
+
+
+{
+    "isAuthenticated": true,
+    "isRegistrationSucceed": true,
+    "vMessage": "SignUp Successfull!!",
+    "userObj": {
+        "iAutoId": 4,
+        "vUserId": "kabila",
+        "vFullName": "kabila",
+        "dDateOfBirth": "1998-02-09T00:00:00",
+        "bIsActive": true
+    }
+}
+
+
+
+
+
+{
+    "isAuthenticated": false,
+    "isRegistrationSucceed": false,
+    "vMessage": "This UserId is not available for new registration!",
+    "userObj": null
+}
+------------------------
+
+
+----------------------
+http://localhost:5000/ApiData/UserTodos
+
+{
+    "VUserId": "absjabed"
+}
+
+
+[
+    {
+        "iAutoId": 2,
+        "vUserId": "absjabed",
+        "vTodoId": "405CF7A5-8C95-4DB2-97C9-D8495B3D025A",
+        "vTodoTitle": "Automation Script Task",
+        "vTodoDescription": "Automation Script needs to be prepared for system backup.",
+        "dDate": "2021-12-24T00:00:00",
+        "tTime": "08:00 PM#08:30PM",
+        "vLocation": "CTG, BD",
+        "tNotifyTime": "20 minutes",
+        "vColorLabel": "Teal#29cfbf",
+        "bIsDone": false,
+        "bIsDeleted": false,
+        "dDateOfEntry": "2021-01-28T09:56:41.14"
+    }
+]
+--------------------
+
+-------------------
+http://localhost:5000/ApiData/AddTodo
+
+{
+        "vUserId": "absjabed",
+        "vTodoTitle": "Add New Todo 1",
+        "vTodoDescription": "Adding New Todo from API",
+        "dDate": "2021-12-28T00:00:00",
+        "tTime": "09:00 PM#08:30PM",
+        "vLocation": "Dhaka, BD",
+        "tNotifyTime": "30 minutes",
+        "vColorLabel": "Teal#29cfbf"
+    }
+
+{
+    "addedStatus": {
+        "isSucceeed": true,
+        "vMessage": "New ToDo added successfully!."
+    }
+}
+--------------------
+http://localhost:5000/ApiData/UpdateTodo
+
+
+{
+        "vUserId": "noman",
+        "vTodoTitle": "## Add New Todo 2",
+        "vTodoId":"88AEB394-F1A1-484E-A200-65581C80B32D",
+        "vTodoDescription": "5# Adding New Todo from API",
+        "dDate": "2021-12-28T00:00:00",
+        "tTime": "09:00 PM#08:30PM",
+        "vLocation": "CD, BD",
+        "tNotifyTime": "10 minutes",
+        "vColorLabel": "Teal#29cfbf"
+    }
+
+
+{
+    "updatedStatus": {
+        "isSucceeed": false,
+        "vMessage": "Faild to update task..."
+    }
+}
+---------------------
+http://localhost:5000/ApiData/DeleteTodo
+
+{
+        "vUserId": "noman",
+        "vTodoId":"88AEB394-F1A1-484E-A200-65581C80B32D"
+}
+
+{
+    "deletedStatus": {
+        "isSucceeed": true,
+        "vMessage": "Task Deleted successfully..."
+    }
+}
+
+----------------------
+http://localhost:5000/ApiData/DoneTodo
+{
+        "vUserId": "absjabed",
+        "vTodoId":"71A0F3A1-49DD-48EB-882C-04BD1C28CF54"
+    }
+
+{
+    "doneStatus": {
+        "isSucceeed": true,
+        "vMessage": "Task marked as done."
+    }
+}
+
+-------------------------
