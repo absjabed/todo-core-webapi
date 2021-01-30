@@ -20,7 +20,7 @@ namespace todo_core_webapi.Services
 
         public List<TodoTableDto> GetUserTodos(UserTodoIdModel userTodoIdModel)
         {
-             var todos = _context.TodoTable.Where(x => x.VUserId.Equals(userTodoIdModel.VUserId) && x.BIsDeleted.Equals(false)).ToList();
+             var todos = _context.TodoTable.Where(x => x.VUserId.Equals(userTodoIdModel.VUserId) && x.BIsDeleted.Equals(false)).OrderByDescending(y => y.DDate).OrderByDescending(y=> y.IAutoId).ToList();
 
              if (todos == null) return null;
 
