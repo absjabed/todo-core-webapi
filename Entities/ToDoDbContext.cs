@@ -86,7 +86,7 @@ namespace todo_core_webapi.Entities
                 entity.Property(e => e.VUserId)
                     .IsRequired()
                     .HasColumnName("vUserId")
-                    .HasMaxLength(20)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.VUser)
@@ -129,7 +129,7 @@ namespace todo_core_webapi.Entities
                 entity.Property(e => e.VUserId)
                     .IsRequired()
                     .HasColumnName("vUserId")
-                    .HasMaxLength(20)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
 
