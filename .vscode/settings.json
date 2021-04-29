@@ -1,0 +1,21 @@
+{
+    "sqltools.connections": [
+        {
+            "mssqlOptions": {
+                "appName": "SQLTools",
+                "useUTC": true,
+                "encrypt": true,
+                "abortTransactionOnError": true,
+                "instanceName": "ToDoInstance"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 1433,
+            "askForPassword": true,
+            "driver": "MSSQL",
+            "name": "TodoDB",
+            "group": "WorkProjects",
+            "connectString": "workstation id=ToDoDb0.mssql.somee.com;packet size=4096;user id=adsa321_SQLLogin_1;pwd=nriquhqy4b;data source=ToDoDb0.mssql.somee.com;persist security info=False;initial catalog=ToDoDb0"
+        }
+    ]
+}

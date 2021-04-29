@@ -14,6 +14,6 @@ namespace todo_core_webapi.Interface
         TodoOperationResponse DoneTodo(UserTodoIdModel userTodoIdModel);
         AuthenticationResponse LoginUser(AuthenticationRequest authenticationRequest);
         AuthenticationResponse RegisterUser(UserRegistrationModel userRegistrationModel);
-
+        AuthenticationResponse RegisterWithSocialLogin(UserRegistrationModel userRegistrationModel);
     }
 }

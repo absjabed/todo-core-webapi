@@ -41,6 +41,14 @@ namespace todo_core_webapi.Controllers
         }
 
         [HttpPost]
+        public IActionResult SocialLogin(UserRegistrationModel userRegistrationModel)
+        {
+            var registrationResponse = _iDataOperations.RegisterWithSocialLogin(userRegistrationModel);
+
+            return Ok(registrationResponse);
+        }
+
+        [HttpPost]
         public IActionResult UserTodos(UserTodoIdModel userTodoIdModel)
         {
             var userTodoResponse = _iDataOperations.GetUserTodos(userTodoIdModel);

@@ -172,6 +172,60 @@ namespace todo_core_webapi.Services
 
             return authenticationResponse;
         }
+
+        public AuthenticationResponse RegisterWithSocialLogin(UserRegistrationModel userRegistrationModel)
+        {
+            UserInfoTableDto userInfoTableDto = new UserInfoTableDto {
+                IAutoId = 0,
+                VUserId = userRegistrationModel.VUserId,
+                VFullName = userRegistrationModel.VFullName,
+                DDateOfBirth = userRegistrationModel.DDateOfBirth,
+                VPassword = userRegistrationModel.VPassword,
+                BIsActive = true
+            };
+            AuthenticationResponse authenticationResponse = new AuthenticationResponse();
+
+            var userEntity = _context.UserInfoTable.FirstOrDefault(x => x.VUserId.Equals(userInfoTableDto.VUserId));
+
+            if(userEntity != null){ //Check if this userid already exists in the system...
+                UserInfoTableDto userDto = _mapper.Map<UserInfoTableDto>(userEntity);
+                authenticationResponse = new AuthenticationResponse {
+                    isAuthenticated = true,
+                    isRegistrationSucceed = true,
+                    vMessage = "User Already Registered, Login Successfull!",
+                    userObj = userDto
+                };
+            }else{
+                // New User Registration...
+
+                UserInfoTable userObj = _mapper.Map<UserInfoTable>(userInfoTableDto);
+
+                _context.UserInfoTable.Add(userObj);
+                var res = _context.SaveChanges();
+
+                if(res > 0){  // New Us\er Registration entry succeed...
+
+                    UserInfoTableDto newUserObj = _mapper.Map<UserInfoTableDto>(userObj);
+                        authenticationResponse = new AuthenticationResponse {
+                            isAuthenticated = true,
+                            isRegistrationSucceed = true,
+                            vMessage = "SignUp Successfull!!",
+                            userObj = newUserObj
+                        };
+                    
+                }else{ // New User Registration entry failed...
+                        authenticationResponse = new AuthenticationResponse {
+                            isAuthenticated = false,
+                            isRegistrationSucceed = false,
+                            vMessage = "SignUp Failed!",
+                            userObj = null
+                        };
+                }
+            }
+
+            return  authenticationResponse;
+        }
+
         public AuthenticationResponse RegisterUser(UserRegistrationModel userRegistrationModel)
         {
             UserInfoTableDto userInfoTableDto = new UserInfoTableDto {
